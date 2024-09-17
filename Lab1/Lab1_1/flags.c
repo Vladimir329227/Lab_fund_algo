@@ -177,7 +177,7 @@ enum Errors my_factorial(long long int nam, long long int* rez){
         return OK;
     }
     *rez = 1;
-    for (long long int i = 2; i < nam; i++){
+    for (long long int i = 2; i <= nam; i++){
         if (LLONG_MAX / i / (*rez) == 0)
             return INVALID_MEMORY;
         (*rez) *= i;

@@ -107,10 +107,6 @@ int main(int argc, char **argv) {
         printf("INVALID_INPUT");
         return INVALID_INPUT;
     }
-    printf("%i", argc);
-
-    for (int i = 1; i < argc; i++)
-        printf(argv[i]);
-
+    
     return OK;
 }
