@@ -42,6 +42,7 @@ int main(int argc, char **argv) {
             for (int i = 0; i < col_vo_h; i++)
                 printf("%i ",result_h[i]);
             printf("\n");
+            free(result_h);
             break;
         case 'p':
             int rez_p;
@@ -63,16 +64,21 @@ int main(int argc, char **argv) {
             for (int i = 0; i < col_vo_s; i++)
                 printf("%c ", rez_s[i]);
             printf("\n");
+            free(rez_s);
             break;
         case 'e':
-            int** rez_e;
+            long long int** rez_e;
             err = get_table_of_degrees(namber, &rez_e);
             if (err != OK) break;
-            for (int i = 0; i <= namber; i++){
+            for (int i = 0; i <= namber; i++){                
                 for (int o = 0; o < 10; o++)
-                    printf("%i ", rez_e[i][o]);
+                    printf("%lli ", rez_e[i][o]);
                 printf("\n");
+                if (namber == 1) break;
             }
+            for (int i = 0; i <= namber; i++)
+                free(rez_e[i]);
+            free(rez_e);
             break;
         case 'a':
             long long int rez_a;

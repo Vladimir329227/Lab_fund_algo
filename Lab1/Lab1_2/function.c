@@ -4,14 +4,15 @@ enum Errors convert_str_to_double(const char *str, double * result)
 {
     char *endptr;
     *result = strtod(str, &endptr);
-    if (errno == ERANGE && (*result == HUGE_VAL || *result == -HUGE_VAL))
+    if (*result == HUGE_VAL || *result == -HUGE_VAL)
     {
-        return INVALID_INPUT;
-    } else if (errno == ERANGE && *result == 0) {
         return INVALID_INPUT;
     } else if (*endptr != '\0') {
         return INVALID_INPUT;
+    } else if (*result == 0.0) {
+        return INVALID_INPUT;
     }
+    
     return OK;
 }
 
@@ -22,6 +23,8 @@ enum Errors find_e_by_limit(double eps, double* rez){
         prev = cur;
         n++;
         cur = pow(1.0+1.0/n, n);
+        if (n >= pow(10, MAX_POW_TO_DALAY))
+            return INVALID_INPUT;
     } while (fabs(cur - prev) >= eps);
     *rez = cur;
     return OK;
@@ -34,11 +37,11 @@ enum Errors find_pi_by_limit(double eps, double* rez){
         prev = cur;
         n++;
         cur = pow(2,n*4)/n;
+        if (n >= pow(10, MAX_POW_TO_DALAY))
+            return INVALID_INPUT;
         for (int i = 1; i <= n; i++)
             cur *= pow(i,2)/pow(i+n,2);
     } while (fabs(cur - prev) >= eps);
-    if (cur > ULLONG_MAX)
-        return INVALID_INPUT;
     *rez = cur;
     return OK;
 }
@@ -50,6 +53,8 @@ enum Errors find_ln_2_by_limit(double eps, double* rez){
         prev = cur;
         n++;
         cur = n*(pow(2,1/n)-1);
+        if (n >= pow(10, MAX_POW_TO_DALAY))
+            return INVALID_INPUT;
     } while (fabs(cur - prev) >= eps);
     if (cur > ULLONG_MAX)
         return INVALID_INPUT;
@@ -105,6 +110,8 @@ enum Errors find_gamma_by_limit(double eps, double* rez){
                 return INVALID_INPUT;
             cur += log(rez_1) * pow(-1,i) / i / rez_1 / rez_2;
         }
+        if (n >= pow(10, MAX_POW_TO_DALAY))
+                return INVALID_INPUT;
         if (my_factorial(n,&rez_1) != OK) 
                 return INVALID_INPUT;
         cur *= rez_1;
@@ -125,6 +132,8 @@ enum Errors find_e_by_row(double eps, double* rez){
         n++;
         fact *= n;
         cur += 1/fact;
+        if (n >= pow(10, MAX_POW_TO_DALAY))
+                return INVALID_INPUT;
     } while (fabs(cur - prev) >= eps);
     if (cur > ULLONG_MAX)
         return INVALID_INPUT;

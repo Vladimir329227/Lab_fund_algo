@@ -35,7 +35,7 @@ enum Errors convert_str_to_int(const char *str, long long int * result, int base
     char *endptr;
     *result = strtoll(str, &endptr, base);
 
-    if (errno == ERANGE && (*result == LLONG_MAX || *result == LLONG_MIN))
+    if (*result == LLONG_MAX || *result == LLONG_MIN)
         return INVALID_INPUT;
     else if (*endptr != '\0') 
         return INVALID_INPUT;
@@ -48,8 +48,8 @@ enum Errors find_multiples_nam(long long int nam, int** rez, int* col_vo){
     *col_vo = (int)(100 / llabs(nam));
 
     *rez = (int*)malloc(*col_vo*sizeof(int));
-    if (rez == NULL){
-        free(*rez);
+    if (*rez == NULL){
+        //free(*rez);
         return INVALID_MEMORY;
     } 
 
@@ -93,6 +93,9 @@ enum Errors convert_int_to_16x_str (long long int nam, char** rez, int* col_vo){
         (*col_vo)++;
     }
 
+    if (nam == 0) *col_vo = 1;
+
+
     *rez = (char*)malloc(*col_vo*sizeof(char));
     if (rez == NULL){
         free(*rez);
@@ -123,22 +126,23 @@ enum Errors convert_int_to_16x_str (long long int nam, char** rez, int* col_vo){
     return OK;
 }
 
-enum Errors get_table_of_degrees(long long int nam, int*** rez){
+enum Errors get_table_of_degrees(long long int nam, long long int*** rez){
     if (nam > 10 || nam < 1)
         return INVALID_INPUT;
     
-    *rez = (int **) malloc(nam * sizeof(int*));
+    *rez = (long long int **) malloc(nam * sizeof(long long int*));
     if (*rez == NULL){
         free(*rez);
         return INVALID_MEMORY;
     } 
     for (int i = 0; i < nam; i++)
     {
-        (*rez)[i] = (int *)malloc(10 * sizeof(int));
+        (*rez)[i] = (long long int *)malloc(10 * sizeof(long long int));
         if ((*rez)[i] == NULL){
             for (int o = 0; o <= i; o++)
                 free((*rez)[i]);
             free(*rez);
+            
             return INVALID_MEMORY;
         } 
     }
@@ -146,9 +150,9 @@ enum Errors get_table_of_degrees(long long int nam, int*** rez){
     for (int i = 1; i <= nam; i++){
         for (int o = 1; o <= 10; o++){
             if (i == 1)
-                (*rez)[i-1][o-1] = o;
+                (*rez)[i-1][o-1] = (long long int)o;
             else
-                (*rez)[i-1][o-1] = (*rez)[i-2][o-1] * o;
+                (*rez)[i-1][o-1] = (long long int)(*rez)[i-2][o-1] * (long long int)o;
         }
     }
     return OK;

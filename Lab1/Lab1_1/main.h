@@ -4,6 +4,8 @@
 #include <errno.h>
 #include <stdlib.h>
 
+
+
 enum Errors
 {
     OK,
@@ -21,7 +23,7 @@ enum Errors is_prime_number(long long int nam, int* rez);
 
 enum Errors convert_int_to_16x_str (long long int nam, char** rez, int* col_vo);
 
-enum Errors get_table_of_degrees(long long int nam, int*** rez);
+enum Errors get_table_of_degrees(long long int nam, long long int*** rez);
 
 enum Errors summ_natur_nambers(long long int nam, long long int* rez);
 
