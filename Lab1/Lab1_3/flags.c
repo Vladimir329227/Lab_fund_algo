@@ -4,7 +4,7 @@ enum Errors is_valid_flag(const char *str)
 {
     if (str == NULL)
         return INVALID_INPUT;
-    if (str[0] == '-' && str[2] == '\0')
+    if ((str[0] == '-' || str[0] == '/') && str[2] == '\0')
         return OK;
     return INVALID_INPUT;
 }
