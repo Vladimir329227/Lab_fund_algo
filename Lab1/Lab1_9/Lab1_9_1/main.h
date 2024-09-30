@@ -9,6 +9,9 @@
 #include <float.h>
 #include <ctype.h>
 #include <string.h>
+#include <time.h>
+
+#define ARRAY_SIZE 10
 
 enum Errors
 {
@@ -18,9 +21,10 @@ enum Errors
     ERROR_OPEN_FILE,
 };
 
-enum Errors convert_to_base(const long long int num, int base, char *result);
+enum Errors convert_str_to_int(const char *str, long int * result, const int base);
 
-enum Errors convert_to_decimal(const char *str, int base, long long int* result);
+enum Errors swap_min_max(long int** arr, int size);
 
+enum Errors fill_array(long int** result_array, int size_of_array, long int a, long int b);
 
 #endif

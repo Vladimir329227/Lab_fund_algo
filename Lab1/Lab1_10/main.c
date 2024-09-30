@@ -26,7 +26,7 @@ int main() {
 
         token = strtok(input, " \t\n");
         while (token != NULL) {
-            if (convertToDecimal(token, base, &num) != OK){
+            if (convert_to_decimal(token, base, &num) != OK){
                 printf("INVALID_INPUT");
                 return INVALID_INPUT;
             }
@@ -43,7 +43,7 @@ int main() {
     int bases[] = {9, 18, 27, 36};
 
     for (int i = 0; i < 4; i++) {
-        convertToBase(maxNum, bases[i], result);
+        convert_to_base(maxNum, bases[i], result);
         printf("String representation in radix number system %d: %s\n", bases[i], result);
     }
 

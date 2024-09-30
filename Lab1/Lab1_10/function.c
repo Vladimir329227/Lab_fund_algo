@@ -1,6 +1,6 @@
 #include "main.h"
 
-enum Errors convertToDecimal(const char *str, int base, long long int* result) {
+enum Errors convert_to_decimal(const char *str, int base, long long int* result) {
     if (!str || !result)
         return INVALID_INPUT;
     *result = 0;
@@ -29,13 +29,12 @@ enum Errors convertToDecimal(const char *str, int base, long long int* result) {
     return OK;
 }
 
-enum Errors convertToBase(const long long int num, int base, char *result) {
+enum Errors convert_to_base(const long long int num, int base, char *result) {
     if (!result)
         return INVALID_INPUT;
     
 
     int index = 0;
-    int sign = 1;
     long long int num_t = llabs(num);
 
     do {
@@ -44,7 +43,7 @@ enum Errors convertToBase(const long long int num, int base, char *result) {
         num_t /= base;
     } while (num_t > 0);
 
-    if (sign == -1) {
+    if (num < 0) {
         result[index++] = '-';
     }
 
