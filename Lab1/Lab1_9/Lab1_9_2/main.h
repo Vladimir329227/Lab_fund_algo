@@ -19,14 +19,12 @@ enum Errors
     ERROR_OPEN_FILE,
 };
 
-enum Errors convert_str_to_int(const char *str, long int * result, const int base);
+enum Errors swap_min_max(short** arr, const int size);
 
-enum Errors swap_min_max(long int** arr, int size);
+enum Errors fill_array(short** result_array, const int size_of_array, const short a, const short b);
 
-enum Errors fill_array(long int** result_array, int size_of_array, long int a, long int b);
-
-enum Errors generate_array_with_find_closest(long int * array_a, int size_of_array_a,
-                                            long int * array_b, int size_of_array_b,
-                                            long int ** array_c);
+enum Errors generate_array_with_find_closest(short * array_a, const int size_of_array_a,
+                                            short * array_b, const int size_of_array_b,
+                                            short ** array_c);
 
 #endif

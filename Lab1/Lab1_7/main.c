@@ -2,6 +2,10 @@
 #include "main.h"
 
 int main(int argc, char **argv) { 
+    char t[6];
+
+    convert_to_base4(t, 10, 6);
+    printf("%s \n", t);
     if (argc == 5 || argc == 4){
         if (is_valid_flag(argv[1]) != OK){
             printf("INVALID_INPUT\n");

@@ -5,7 +5,10 @@
         "main.h": "c",
         "stdio.h": "c",
         "string.h": "c",
-        "ctype.h": "c"
+        "ctype.h": "c",
+        "string": "c",
+        "stdlib.h": "c",
+        "corecrt.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

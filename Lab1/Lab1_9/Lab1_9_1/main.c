@@ -28,6 +28,7 @@ int main(int argc, char **argv) {
     printf("\n");
 
     if (swap_min_max(&result_array, ARRAY_SIZE) != OK){
+        free(result_array);
         printf("INVALID_INPUT");
         return INVALID_INPUT;
     }
@@ -37,5 +38,6 @@ int main(int argc, char **argv) {
         printf("%li ", result_array[i]);
     printf("\n");
 
+    free(result_array);
     return OK;
 }

@@ -1,22 +1,7 @@
 #include "main.h"
 
-enum Errors convert_str_to_int(const char *str, long int * result, const int base)
-{
-    if (str == NULL || result == NULL)
-        return INVALID_INPUT;
-    char *endptr;
-    *result = strtol(str, &endptr, base);
-
-    if (*result == LONG_MAX || *result == LONG_MIN)
-        return INVALID_INPUT;
-    else if (*endptr != '\0') 
-        return INVALID_INPUT;
-
-    return OK;
-}
-
-enum Errors fill_array(long int** result_array, int size_of_array, long int a, long int b) {
-    (*result_array) = (long int *) malloc(size_of_array * sizeof(long int));
+enum Errors fill_array(short** result_array, const int size_of_array, const short a, const short b) {
+    (*result_array) = (short *) malloc(size_of_array * sizeof(short));
     if (!(*result_array))
         return INVALID_MEMORY;
 
@@ -27,7 +12,7 @@ enum Errors fill_array(long int** result_array, int size_of_array, long int a, l
     return OK;
 }
 
-enum Errors swap_min_max(long int** arr, int size) {
+enum Errors swap_min_max(short** arr, const int size) {
     if (!arr || !(*arr) || size <= 1)
         return INVALID_INPUT;
 
@@ -42,48 +27,79 @@ enum Errors swap_min_max(long int** arr, int size) {
         }
     }
 
-    long int temp = (*arr)[minIdx];
+    short temp = (*arr)[minIdx];
     (*arr)[minIdx] = (*arr)[maxIdx];
     (*arr)[maxIdx] = temp;
     return OK;
 }
 
-enum Errors find_closest(long int* arr, int size, int target, long int* result) {
+void bubbleSort(short* arr, const int size) {
+    short temp;
+    for (int i = 0; i < size - 1; i++) {
+        for (int j = 0; j < size - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+enum Errors find_closest(short* arr, const int size, const int target, short* result) {
     if (size == 0)
         return INVALID_INPUT; 
 
-    *result  = arr[0];
-    long int min_diff = abs(arr[0] - target);
-    long int diff;
-    for (int i = 1; i < size; i++) {
-        diff = labs(arr[i] - target);
+    int left = 0;
+    int right = size - 1;
+    *result = arr[0];
+    int min_diff = abs(arr[0] - target);
+    int mid, diff;
+
+    while (left <= right) {
+        mid = left + (right - left) / 2;
+        diff = abs(arr[mid] - target);
+
         if (diff < min_diff) {
             min_diff = diff;
-            *result  = arr[i];
+            *result = arr[mid];
+        }
+
+        if (arr[mid] < target) {
+            left = mid + 1;
+        } else if (arr[mid] > target) {
+            right = mid - 1;
+        } else {
+            *result = arr[mid]; 
+            break;
         }
     }
+
 
     return OK;
 }
 
-enum Errors generate_array_with_find_closest(long int * array_a, int size_of_array_a,
-                                            long int * array_b, int size_of_array_b,
-                                            long int ** array_c)
+enum Errors generate_array_with_find_closest(short * array_a, const int size_of_array_a,
+                                            short * array_b, const int size_of_array_b,
+                                            short ** array_c)
 {
     if (!array_a || !array_b)
         return INVALID_INPUT;
     
-    (*array_c) = (long int*) malloc(sizeof(long int) * size_of_array_a);
+    (*array_c) = (short*) malloc(sizeof(short) * size_of_array_a);
     if (!array_c)
         return INVALID_MEMORY;
-    
-    long int find_namber;
+    bubbleSort(array_b, size_of_array_b);
+    short find_namber;
     for(int i = 0; i < size_of_array_a; ++i)
     {
-        if (find_closest(array_b, size_of_array_b, array_a[i], &find_namber) != OK)
+        if (find_closest(array_b, size_of_array_b, array_a[i], &find_namber) != OK){
+            free(*array_c);
             return INVALID_INPUT;
+        }
         (*array_c)[i] = array_a[i] + find_namber;
     }
+
 
     return OK;
 }

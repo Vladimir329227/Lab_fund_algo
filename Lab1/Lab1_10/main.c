@@ -8,6 +8,7 @@ int main() {
     getchar();
 
     if (base < 2 || base > 36) {
+        printf("INVALID_INPUT");
         return INVALID_INPUT;
     }
 
@@ -15,12 +16,16 @@ int main() {
     char input[100];
     long long int num;
     char *token;
-
+    int is_use = 0;
     while (1) {
         fgets(input, sizeof(input), stdin);
-        input[strcspn(input, "\n")] = 0;
-
-        if (strcmp(input, "Stop") == 0) {
+        
+        if (strcmp(input, "Stop\n") == 0 && is_use == 0) {
+            printf("Error");
+            return INVALID_INPUT;
+        }
+        is_use = 1;
+        if (strcmp(input, "Stop\n") == 0) {
             break;
         }
 

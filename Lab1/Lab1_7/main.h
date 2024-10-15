@@ -9,7 +9,8 @@
 #include <float.h>
 #include <ctype.h>
 #include <string.h>
-
+#include <ctype.h>
+#include <stdlib.h>
 enum Errors
 {
     OK,
@@ -17,6 +18,8 @@ enum Errors
     INVALID_INPUT,
     ERROR_OPEN_FILE,
 };
+
+void convert_to_base4(char *dest, char c, int size);
 
 enum Errors is_valid_flag(const char *str);
 

@@ -21,6 +21,8 @@ enum Errors convert_to_decimal(const char *str, int base, long long int* result)
         } else {    
             return INVALID_INPUT;
         }
+        if (*result > LLONG_MAX / base - digit)
+            return INVALID_INPUT;
         *result = *result * base + digit;
         i++;
     }

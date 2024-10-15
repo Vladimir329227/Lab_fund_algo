@@ -7,7 +7,6 @@ int get_min_base(const char *number) {
     int digit;
 
 
-    // Пропускаем пробелы и определяем знак
     while (number[i] == ' ' || number[i] == '\t' || number[i] == '\n') i++;
     if (number[i] == '-' || number[i] == '+') i++;
 
@@ -78,6 +77,9 @@ enum Errors convert_to_decimal(const char *number, int base,double* result) {
         } else {
             break;
         }
+        if ( digit * base > LONG_MAX / *result / base)
+            return INVALID_INPUT;
+
         *result = *result * base + digit;
         i++;
     }
@@ -117,6 +119,8 @@ enum Errors convert_to_decimal(const char *number, int base,double* result) {
                 i++;
             }
             while (isdigit(number[i])) {
+                if (exp_value > INT_MAX / 10 - (number[i] - '0'))
+                    return INVALID_INPUT;
                 exp_value = exp_value * 10 + (number[i] - '0');
                 i++;
             }
@@ -132,6 +136,8 @@ enum Errors convert_to_decimal(const char *number, int base,double* result) {
     }
 
     if (exponent != 0) {
+        if (*result > DBL_MAX / pow(base, exponent))
+            return INVALID_INPUT;
         *result = *result * pow(base, exponent);
     }
 
@@ -148,6 +154,12 @@ enum Errors process_files(const char *input_path, const char *output_path) {
         return INVALID_INPUT;
     }
 
+    char real_input_path[PATH_MAX];
+    char real_output_path[PATH_MAX];
+
+    if (_fullpath(real_input_path,input_path,PATH_MAX) == NULL || _fullpath(real_output_path,output_path,PATH_MAX) == NULL) 
+        return ERROR_OPEN_FILE;
+
     FILE *input_file = fopen(input_path, "r");
     FILE *output_file = fopen(output_path, "w");
 
@@ -158,18 +170,31 @@ enum Errors process_files(const char *input_path, const char *output_path) {
     }
 
     char buffer[1024];
+    int buffer_index = 0, c, min_base;
     double decimal_value;
-    int min_base;
-    while (fgets(buffer, sizeof(buffer), input_file) != NULL) {
-        char *token = strtok(buffer, " \t\n");
-        while (token != NULL) {
-            min_base = get_min_base(token);
-            if (convert_to_decimal(token, min_base, &decimal_value) == OK)
-                fprintf(output_file, "%s %d %.10f\n",token , min_base, decimal_value);
-            token = strtok(NULL, " \t\n");
+
+    while ((c = fgetc(input_file)) != EOF) {
+        if (isspace(c)) {
+            if (buffer_index > 0) {
+                buffer[buffer_index] = '\0';
+                min_base = get_min_base(buffer);
+                if (convert_to_decimal(buffer, min_base, &decimal_value) == OK)
+                    fprintf(output_file, "%s %d %.10f\n", buffer, min_base, decimal_value);
+                buffer_index = 0;
+            }
+        } else {
+            if (buffer_index >= 1023){
+                return INVALID_INPUT;
+            }
+            buffer[buffer_index++] = c;
         }
-        free(token);
     }
+    
+    buffer[buffer_index] = '\0';
+    min_base = get_min_base(buffer);
+    if (buffer_index != 0 && convert_to_decimal(buffer, min_base, &decimal_value) == OK)
+        fprintf(output_file, "%s %d %.10f\n", buffer, min_base, decimal_value);
+    buffer_index = 0;
 
     fclose(input_file);
     fclose(output_file);

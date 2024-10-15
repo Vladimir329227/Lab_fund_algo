@@ -5,21 +5,24 @@ int main(int argc, char **argv) {
     if (argc == 3){
         enum Errors err = OK;
 
-        process_files(argv[1], argv[2]);
+        err = process_files(argv[1], argv[2]);
 
         switch (err)
         {
         case INVALID_INPUT:
-            printf("INVALID_INPUT in %c", argv[1][1]);
+            printf("INVALID_INPUT");
             return INVALID_INPUT;
         case INVALID_MEMORY:
-            printf("INVALID_MEMORY in %c", argv[1][1]);
+            printf("INVALID_MEMORY");
             return INVALID_MEMORY;
         case ERROR_OPEN_FILE:
-            printf("ERROR_OPEN_FILE in %c", argv[1][1]);
+            printf("ERROR_OPEN_FILE");
+            return ERROR_OPEN_FILE;
+        case OK:
+            printf("Everything is done\n");
             return ERROR_OPEN_FILE;
         default:
-            break;
+            break; 
         }         
     }
     else {
