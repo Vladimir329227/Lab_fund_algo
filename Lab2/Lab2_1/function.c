@@ -123,30 +123,6 @@ enum Errors convert_str_to_int(const char *str, long long int * result, int base
     return OK;
 }
 
-enum Errors is_equal(const char *str1, const char *str2, int* rez)
-{
-    if (str1 == NULL || str2 == NULL || rez == NULL)
-        return INVALID_INPUT;
-    int size_str1, size_str2;
-    *rez = 1;
-
-    if (my_strlen(str1, &size_str1) != OK || my_strlen(str2, &size_str2) != OK)
-        return INVALID_INPUT;
-    if (size_str1 != size_str2)
-        *rez = 0;
-    else{
-        for (int i = 0; i < size_str1; i++)
-        {
-            if (str1[i] != str2[i]){
-                *rez = 0;
-                break;
-            }
-        }
-    }
-        
-    return OK;
-}
-
 enum Errors my_concotenation(char **str, char **result, int count_str, long long int seed)
 {
     if (str == NULL)
@@ -167,6 +143,10 @@ enum Errors my_concotenation(char **str, char **result, int count_str, long long
     srand(seed);
     int rand_num, cur_count_str = 0, cur_size_str = 0;
     int* in_str_conc = (int *) malloc(count_str * sizeof(int));
+    if (!in_str_conc){
+        free(*result);
+        return INVALID_MEMORY;
+    }
     int is_nam_in_mas = 0;
 
     while (cur_count_str != count_str)
@@ -189,8 +169,11 @@ enum Errors my_concotenation(char **str, char **result, int count_str, long long
         if (is_nam_in_mas == 0){
             in_str_conc[cur_count_str] = rand_num;
             cur_count_str++;
-            if (my_strlen(str[rand_num], &cur_size) != OK)
+            if (my_strlen(str[rand_num], &cur_size) != OK){
+                free(*result);
+                free(in_str_conc);
                 return INVALID_INPUT;
+            }
             for (int o = 0; o < cur_size; o++)
             {
                 (*result)[cur_size_str] = str[rand_num][o];
@@ -200,6 +183,7 @@ enum Errors my_concotenation(char **str, char **result, int count_str, long long
     }
 
     (*result)[size_str] = '\0';
+    free(in_str_conc);
     
     return OK;
 }
