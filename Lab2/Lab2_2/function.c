@@ -37,12 +37,12 @@ enum Errors geometric_mean(double* result, int count, ...) {
             return INVALID_INPUT;
         }
 
+        product *= value;
+
         if (!isnormal(product) || isinf(product)) {
             va_end(args);
             return INVALID_INPUT; 
         }
-
-        product *= value;
     }
 
     va_end(args);
