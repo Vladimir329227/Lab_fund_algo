@@ -8,7 +8,8 @@
         "ctype.h": "c",
         "string": "c",
         "stdlib.h": "c",
-        "corecrt.h": "c"
+        "corecrt.h": "c",
+        "float.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

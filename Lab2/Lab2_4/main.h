@@ -12,9 +12,6 @@
 #include <stdarg.h>
 #include <string.h>
 
-#define HASH_SPREAD (long long int)pow(10, 8)
-#define BASE 256
-
 enum Errors
 {
     OK,
@@ -23,6 +20,12 @@ enum Errors
     ERROR_OPEN_FILE,
 };
 
-enum Errors find_word(int** result, int* cur_elem, const char* str, const int count, ...);
+enum Errors is_valid_flag(const char *str);
+
+enum Errors is_convex_polygon(int* result, const int count, ...);
+
+enum Errors evaluate_polynomial(double *result, double x, int count, ...);
+
+enum Errors find_kaprekar_numbers(int* result, int base, int count, ...);
 
 #endif

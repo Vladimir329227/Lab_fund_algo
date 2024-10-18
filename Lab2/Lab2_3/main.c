@@ -2,8 +2,8 @@
 #include "main.h"
 
 int main() { 
-    int res;
-    enum Errors err = find_word(&res, "test", 4, "test1.txt", "test1.txt", "test2.txt", "test3.txt");
+    int* res, cur_elem;
+    enum Errors err = find_word(&res, &cur_elem, "test\ntest", 4, "test1.txt", "test1.txt", "test2.txt", "test3.txt");
     if (err != OK){
         if (err == INVALID_INPUT)
             printf("INVALID_INPUT");
@@ -13,7 +13,14 @@ int main() {
             printf("ERROR_OPEN_FILE");
         return err;
     }
-    printf("Result: %i\n", res);
+
+    for (int i = 0; i < cur_elem; i++)
+    {
+        printf("line %i; simbol %i\n", res[i], res[i+1]);
+        i++;
+    }
+    
+    printf("Result: %i\n", cur_elem / 2);
     
     return OK;
 }
