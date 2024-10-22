@@ -62,7 +62,6 @@ enum Errors search_substring_in_file(int** result, int* cur_elem, const char *fi
         buffer_index = (buffer_index + 1) % substring_len;
         current_hash = hash_string(buffer, substring_len, buffer_index);
         if (current_hash == str_hash){
-            printf("%i %i\n", line, simbol);
             (*result)[*cur_elem] = line;
             (*cur_elem)++;
             (*result)[*cur_elem] = simbol;
@@ -106,7 +105,6 @@ enum Errors find_word(int** result, int* cur_elem, const char* str, const int co
 
     for (int i = 0; i < count; i++) {
         const char *filename = va_arg(args, const char *);
-        printf("%s\n",filename);
         err = search_substring_in_file(result, cur_elem, filename, str_hash, strlen(str));  
         if (err != OK){
             free(*result);

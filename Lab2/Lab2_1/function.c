@@ -17,8 +17,6 @@ enum Errors my_strlen(const char *str, int* result)
     while (str[*result] != '\0')
     {
         (*result)++;
-        if (*result >= pow(10,7))
-            return INVALID_INPUT;
     }
 
     return OK;

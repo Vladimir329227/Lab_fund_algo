@@ -9,6 +9,10 @@
 #include <float.h>
 #include <ctype.h>
 #include <string.h>
+#include <windows.h>
+
+
+#define MAX_LEN_NAMBER 1024
 
 enum Errors
 {

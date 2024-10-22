@@ -21,6 +21,7 @@ int main() {
     }
     
     printf("Result: %i\n", cur_elem / 2);
-    
+    free(res);
+
     return OK;
 }

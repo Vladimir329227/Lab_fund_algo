@@ -50,7 +50,7 @@ int get_min_base(const char *number) {
 
 enum Errors convert_to_decimal(const char *number, int base,double* result) {
     *result = 0.0;
-    int exponent = 0;
+    int exponent = 0, cur_exp = 0;
     int sign = 1;
     int i = 0, space = 0;
     int fractional_part = 0;
@@ -136,9 +136,10 @@ enum Errors convert_to_decimal(const char *number, int base,double* result) {
     }
 
     if (exponent != 0) {
-        if (*result > DBL_MAX / pow(base, exponent))
+        cur_exp = pow(base, exponent);
+        if (*result > DBL_MAX / cur_exp)
             return INVALID_INPUT;
-        *result = *result * pow(base, exponent);
+        *result = *result * cur_exp;
     }
 
     *result *= sign;
@@ -149,16 +150,29 @@ enum Errors convert_to_decimal(const char *number, int base,double* result) {
     return OK;
 }
 
-enum Errors process_files(const char *input_path, const char *output_path) {
-    if (!input_path || !output_path){
-        return INVALID_INPUT;
+int is_file_identical(const char *path1, const char *path2) {
+    char resolved_path1[MAX_PATH];
+    char resolved_path2[MAX_PATH];
+
+    if (GetFullPathName(path1, MAX_PATH, resolved_path1, NULL) == 0) {
+        return 0;
     }
 
-    char real_input_path[PATH_MAX];
-    char real_output_path[PATH_MAX];
+    if (GetFullPathName(path2, MAX_PATH, resolved_path2, NULL) == 0) {
+        return 0;
+    }
 
-    if (_fullpath(real_input_path,input_path,PATH_MAX) == NULL || _fullpath(real_output_path,output_path,PATH_MAX) == NULL) 
-        return ERROR_OPEN_FILE;
+    //printf("%s\n%s\n",resolved_path1, resolved_path2);
+
+    return strcmp(resolved_path1, resolved_path2) == 0;
+}
+
+enum Errors process_files(const char *input_path, const char *output_path) {
+    if (!input_path || !output_path)
+        return INVALID_INPUT;
+
+    if (is_file_identical(input_path, output_path))
+        return INVALID_INPUT;
 
     FILE *input_file = fopen(input_path, "r");
     FILE *output_file = fopen(output_path, "w");
@@ -169,7 +183,7 @@ enum Errors process_files(const char *input_path, const char *output_path) {
         return ERROR_OPEN_FILE;
     }
 
-    char buffer[1024];
+    char buffer[MAX_LEN_NAMBER];
     int buffer_index = 0, c, min_base;
     double decimal_value;
 
@@ -183,7 +197,7 @@ enum Errors process_files(const char *input_path, const char *output_path) {
                 buffer_index = 0;
             }
         } else {
-            if (buffer_index >= 1023){
+            if (buffer_index >= MAX_LEN_NAMBER - 1){
                 return INVALID_INPUT;
             }
             buffer[buffer_index++] = c;

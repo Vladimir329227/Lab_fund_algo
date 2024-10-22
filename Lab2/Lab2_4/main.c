@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
     case '1':
         int result_1;
 
-        err = is_convex_polygon(&result_1, 4, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0);
+        err = is_convex_polygon(&result_1, 2, 1.0, 1.0, 5.0, 2.0);
         if (err != OK)
             break;
 
