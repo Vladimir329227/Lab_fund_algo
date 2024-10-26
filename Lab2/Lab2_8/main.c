@@ -13,8 +13,8 @@ int main() {
         printf("Error: %d\n", err);
     else{
         printf("%s\n", result);
-        free(result);
     }
+    free(result);
 
     return OK;
 }
