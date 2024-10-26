@@ -13,10 +13,10 @@ int main() {
     overfprintf(file, "%%\n%i\n%i\n%Ro\n1", 0, 2, 3, 4);
 
     oversprintf(buffer, "%%\n%i\n%i\n%Ro\n1", 0, 2, 3, 4);
-
     //oversprintf(buffer, "123456790asdf\n%d\n%Ro\n%f\n%mi\n%Zr\n", NUM, NUM, NUM, NUM, NUM);
+
     printf("%s\n", buffer);
 
-     printf("%%");
+    
     return OK;
 }
