@@ -1,9 +1,5 @@
 #include "main.h"
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <math.h>
-
 enum Errors has_finite_representation(double number, int base, int* result) {
     if (number <= 0 || number >= 1 || !result || base < 2 || base > 36) 
         return INVALID_INPUT; 
