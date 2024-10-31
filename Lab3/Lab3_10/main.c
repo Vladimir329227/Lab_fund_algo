@@ -24,6 +24,8 @@ int main(int argc, char* argv[]) {
         error = buildTree(line, &index, &root);
         if (error != OK){
             freeTree(root);
+            fclose(inputFile);
+            fclose(outputFile);
             return error;
         }
         printTree(root, outputFile, 0);

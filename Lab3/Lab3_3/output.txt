@@ -1,0 +1,4 @@
+2 Ivan Ivanov 1000000.000000
+3 Vlad Vladov 400.001007
+4 Bobr Curva 400.001007
+1 Test Testovich 123.123001
