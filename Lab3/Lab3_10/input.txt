@@ -1,0 +1,4 @@
+   A ( B ( E (G,T,R(W,Z)),F(L,M)),C)   
+   A
+v
+A(X,s(d,a,s))
