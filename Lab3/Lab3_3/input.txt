@@ -1,4 +1,4 @@
-1 Test Testovich 123.123
+1 Test Testovich 123.12
 2 Ivan Ivanov 1000000.0
-3 Vlad Vladov 400.001
-4 Bobr Curva 400.001
+3 Vlad Vladov 400.01
+4 Bobr Curva 400.01

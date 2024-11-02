@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
     if (!inputFile)
         return ERROR_OPEN_FILE;
     
-    if (is_valid_flag(argv[2]) != OK){
+    if (is_valid_flag(argv[2]) != OK || is_file_path(argv[1], argv[3]) != OK){
         fclose(inputFile);
         return INVALID_INPUT;
     }
@@ -26,6 +26,7 @@ int main(int argc, char* argv[]) {
     if (err != OK) {
         fclose(inputFile);
         fclose(outputFile);
+        free(employees);
         return err;
     }
 
@@ -36,10 +37,12 @@ int main(int argc, char* argv[]) {
     else{
         fclose(inputFile);
         fclose(outputFile);
+        free(employees);
         return INVALID_INPUT;
     }
 
     err = wreite_file(employees, outputFile, size);
+    free(employees);
     if (err != OK) {
         fclose(inputFile);
         fclose(outputFile);
