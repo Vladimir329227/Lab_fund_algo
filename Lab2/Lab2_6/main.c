@@ -3,46 +3,39 @@
 
 #define NUM 13
 
-int main() { 
+int main() {
+    // Пример использования overfscanf
     FILE *file = fopen("test.txt", "r");
-    if (!file) 
-        return ERROR_OPEN_FILE;
-    
+    if (file == NULL) {
+        perror("Failed to open file");
+        return 1;
+    }
+
     int romanValue;
     unsigned int zeckendorfValue;
-    int customValue;
+    int base = 16;
+    int hexValue;
 
-    overfscanf(file, "%Ro %Zr %CV", &romanValue, &zeckendorfValue, 16, &customValue);
-    printf("Roman: %d, Zeckendorf: %u, Custom: %d\n", romanValue, zeckendorfValue, customValue);
+    overfscanf(file, "%Ro %Zr %Cv", &romanValue, &zeckendorfValue, &base, &hexValue);
+
+    printf("Roman: %d\n", romanValue);
+    printf("Zeckendorf: %u\n", zeckendorfValue);
+    printf("Hex: %d\n", hexValue);
 
     fclose(file);
 
-    //const char *str = "XIX    \t \n\n10101 1A 18 2.01 10101 1A";
+    // Пример использования oversscanf
+    const char *str = "XIX 10110 1a";
     int romanValue2;
-    float f;
-    unsigned int zeckendorfValue2, zeckendorfValue3;
-    int customValue2;
-    int i;
-    int customValue3;
+    unsigned int zeckendorfValue2;
+    int base2 = 16;
+    int hexValue2;
 
-    oversscanf("%Ro test%Zrtest test%99[^!] %CV %i%f%% %Zr %CV ", &romanValue2, &zeckendorfValue2, 16, &customValue2, &i, &f, &zeckendorfValue3, 16, &customValue3);
-    //oversscanf("11 1A","%i %CV", &i, 16, &customValue3);
-    //printf("%i %d \n", i, customValue3);
+    oversscanf(str, "%Ro %Zr %Cv", &romanValue2, &zeckendorfValue2, &base2, &hexValue2);
 
-    printf("Roman: %d, Zeckendorf: %u, Custom: %d \n%i %f Zeckendorf: %u, Custom: %d\n", romanValue2, zeckendorfValue2, customValue2, i, f, zeckendorfValue3, customValue3);
+    printf("Roman: %d\n", romanValue2);
+    printf("Zeckendorf: %u\n", zeckendorfValue2);
+    printf("Hex: %d\n", hexValue2);
 
-    
-    int integer;
-    char character;
-    char string[100];
-
-    if (scanf("%dtest%c %99[^\n]", &integer, &character, string) == 3) {
-        printf(": %d\n", integer);
-        printf(": %c\n", character);
-        printf(": %s\n", string);
-    } else {
-        printf(".\n");
-    }
-
-    return OK;
+    return 0;
 }

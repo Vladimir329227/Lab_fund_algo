@@ -1,0 +1,14 @@
+Students with average grade higher than -nan:
+ID: 5, Name: Charlie Green, Group: GroupA, Average Grade: 88.60
+Students with average grade higher than 84.58:
+Name: John Doe
+Name: Alice Johnson
+Name: Charlie Green
+Name: Eve Black
+Name: Grace Red
+Students with average grade higher than 84.58:
+Name: John Doe
+Name: Alice Johnson
+Name: Charlie Green
+Name: Eve Black
+Name: Grace Red

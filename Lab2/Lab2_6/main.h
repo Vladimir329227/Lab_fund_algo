@@ -21,7 +21,6 @@ enum Errors
 };
 
 int overfscanf(FILE *stream, const char *format, ...);
-
-int oversscanf(const char *format, ...);
+int oversscanf(char *str, const char *format, ...);
 
 #endif

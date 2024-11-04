@@ -1,0 +1,10 @@
+1 John Doe GroupA 85 90 78 88 92
+2 Jane Smith GroupB 75 80 85 70 88
+3 Alice Johnson GroupA 90 95 88 92 85
+4 Bob Brown GroupB 70 75 80 78 82
+5 Charlie Green GroupA 88 90 85 92 88
+6 David White GroupB 72 78 80 75 85
+7 Eve Black GroupA 95 98 90 92 94
+8 Frank Blue GroupB 80 85 88 82 85
+9 Grace Red GroupA 88 90 85 92 88
+10 Helen Yellow GroupB 75 80 85 70 88
