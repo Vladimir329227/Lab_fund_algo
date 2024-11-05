@@ -2,18 +2,17 @@
 
 int main() {
     int n = 3;
-    Vector vectors[] = {
-        {n, (double[]){9, 8, 9}},
-        {n, (double[]){4, 10, 6}},
-        {n, (double[]){7, 9, 9}}
-    };
-    int num_vectors = sizeof(vectors) / sizeof(vectors[0]);
+    Vector v1 = {n, (double[]){1, 2, 3}};
+    Vector v2 = {n, (double[]){7, 8, 9}};
+    Vector v3 = {n, (double[]){7, 8, 9}};
 
-    Vector *longest_vectors[num_vectors];
+    Vector **longest_vectors = NULL;
     int num_longest;
 
-    find_longest_vectors(n, vectors, num_vectors, (double (*)(Vector *, void *))norm_inf_wrapper, NULL, longest_vectors, &num_longest);
-    printf("Longest vectors for norm ∞:\n");
+    if (find_longest_vectors(norm_inf_wrapper, NULL, n, &longest_vectors, &num_longest, &v1, &v2, &v3) != OK) {
+        return INVALID_MEMORY;
+    }
+    printf("Longest vectors for norm 00:\n");
     for (int i = 0; i < num_longest; i++) {
         Vector *v = longest_vectors[i];
         printf("Vector: ");
@@ -22,10 +21,14 @@ int main() {
         }
         printf("\n");
     }
+    free(longest_vectors);
+    longest_vectors = NULL;
 
-    double p = 4;
-    find_longest_vectors(n, vectors, num_vectors, (double (*)(Vector *, void *))norm_p_wrapper, &p, longest_vectors, &num_longest);
-    printf("Longest vectors for norm p (p=8):\n");
+    double p = 2;
+    if (find_longest_vectors(norm_p_wrapper, &p, n, &longest_vectors, &num_longest, &v1, &v2, &v3) != OK) {
+        return INVALID_MEMORY;
+    }
+    printf("Longest vectors for norm p (p=%.2f):\n", p);
     for (int i = 0; i < num_longest; i++) {
         Vector *v = longest_vectors[i];
         printf("Vector: ");
@@ -34,13 +37,17 @@ int main() {
         }
         printf("\n");
     }
+    free(longest_vectors);
+    longest_vectors = NULL;
 
     double A[] = {
-        1, 5, 2,
-        1, 8, 0,
-        3, 9, 1
+        1, 0, 0,
+        0, 1, 0,
+        0, 0, 1
     };
-    find_longest_vectors(n, vectors, num_vectors, (double (*)(Vector *, void *))norm_A_wrapper, A, longest_vectors, &num_longest);
+    if (find_longest_vectors(norm_A_wrapper, A, n, &longest_vectors, &num_longest, &v1, &v2, &v3) != OK) {
+        return INVALID_MEMORY;
+    }
     printf("Longest vectors for norm A:\n");
     for (int i = 0; i < num_longest; i++) {
         Vector *v = longest_vectors[i];
@@ -50,6 +57,8 @@ int main() {
         }
         printf("\n");
     }
+    free(longest_vectors);
+    longest_vectors = NULL;
 
     return 0;
 }

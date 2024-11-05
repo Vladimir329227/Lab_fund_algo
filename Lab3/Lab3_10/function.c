@@ -1,7 +1,7 @@
 #include "main.h"
 
 enum Errors createNode(char value, TreeNode** newNode) {
-    if (!newNode)
+    if (!newNode || !isalpha(value))
         return INVALID_INPUT;
     *newNode = (TreeNode*)malloc(sizeof(TreeNode));
     if (!(*newNode))
@@ -42,8 +42,10 @@ enum Errors buildTree(char* expr, int* index, TreeNode** result) {
         (*index)++;
 
     enum Errors err = createNode(expr[*index], result);
-    if (err != OK)
+    if (err != OK){
+        *result = NULL;
         return err;
+    }
     
     (*index)++;
 
@@ -56,7 +58,10 @@ enum Errors buildTree(char* expr, int* index, TreeNode** result) {
             TreeNode* child;
             err = buildTree(expr, index, &child);
             if (err != OK){
-                freeTree(*result);
+                if (*result != NULL){
+                    freeTree(*result);
+                    *result = NULL;
+                }
                 return err;
             }
             err = addChild(*result, child);

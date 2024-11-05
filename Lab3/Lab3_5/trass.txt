@@ -1,0 +1,15 @@
+ID: 1, Name: John Doe, Group: GroupA, Average Grade: 86.60
+ID: 1, Name: John Doe, Group: GroupA, Average Grade: 86.60
+ID: 1, Name: John Doe, Group: GroupA, Average Grade: 86.60
+ID: 1, Name: John Doe, Group: GroupA, Average Grade: 86.60
+ID: 1, Name: John Doe, Group: GroupA, Average Grade: 86.60
+ID: 1, Name: John Doe, Group: GroupA, Average Grade: 86.60
+ID: 1, Name: John Doe, Group: GroupA, Average Grade: 86.60
+ID: 1, Name: John Doe, Group: GroupA, Average Grade: 86.60
+ID: 1, Name: John Doe, Group: GroupA, Average Grade: 86.60
+Students with average grade higher than 84.58:
+Name: Alice Johnson
+Name: Charlie Green
+Name: Eve Black
+Name: Grace Red
+Name: John Doe

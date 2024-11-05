@@ -1,0 +1,160 @@
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Enter ID: Student found: ID=1, Name=John Doe, Group=GroupA
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Enter surname: Students found:
+ID=1, Name=John Doe, Group=GroupA
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Enter name: Students found:
+ID=1, Name=John Doe, Group=GroupA
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Enter group: Students found:
+ID=1, Name=John Doe, Group=GroupA
+ID=3, Name=Alice Johnson, Group=GroupA
+ID=5, Name=Charlie Green, Group=GroupA
+ID=7, Name=Eve Black, Group=GroupA
+ID=9, Name=Grace Red, Group=GroupA
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Students sorted by ID
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Students sorted by surname
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Students sorted by name
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Students sorted by group
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Enter ID: Student data written to file
+Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Menu:
+1. Find student by ID
+2. Find students by surname
+3. Find students by name
+4. Find students by group
+5. Sort students by ID
+6. Sort students by surname
+7. Sort students by name
+8. Sort students by group
+9. Write student data to file
+10. Write high average students to file
+11. Print all students
+0. Exit
+Enter your choice: Exiting...

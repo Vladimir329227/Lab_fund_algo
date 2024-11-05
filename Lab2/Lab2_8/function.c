@@ -45,7 +45,7 @@ enum Errors addInBase(int base, const char* num1, const char* num2, char** resul
     int len2 = strlen(num2);
     int maxLen = (len1 > len2) ? len1 : len2;
     int carry = 0;
-    *result = (char*)malloc(maxLen + 2); // +2 для возможного переноса и нуль-терминатора
+    *result = (char*)malloc(maxLen + 2);
 
     if (!*result) 
         return INVALID_MEMORY;

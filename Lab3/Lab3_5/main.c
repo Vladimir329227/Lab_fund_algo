@@ -6,6 +6,11 @@ int main(int argc, char *argv[]) {
 
     const char *inputFile = argv[1];
     const char *outputFile = argv[2];
+    char *trassFile = NULL;
+
+    if (argc > 3) {
+        trassFile = argv[3];
+    }
 
     enum Errors err = OK;
     int count;
@@ -42,6 +47,9 @@ int main(int argc, char *argv[]) {
                 if (student) {
                     printf("Student found: ID=%u, Name=%s %s, Group=%s\n",
                            student->id, student->name, student->surname, student->group);
+                    if (trassFile) {
+                        writeStudentDataToFile(trassFile, student);
+                    }
                 } else {
                     printf("Student not found\n");
                 }
@@ -58,10 +66,14 @@ int main(int argc, char *argv[]) {
                     break;
                 }
                 if (foundCount > 0) {
+                    if (trassFile) {
+                        writeStudentDataToFile(trassFile, foundStudents);
+                    }
                     printf("Students found:\n");
                     for (int i = 0; i < foundCount; i++) {
                         printf("ID=%u, Name=%s %s, Group=%s\n",
                                foundStudents[i].id, foundStudents[i].name, foundStudents[i].surname, foundStudents[i].group);
+                               
                     }
                 } else {
                     printf("No students found\n");
@@ -80,6 +92,9 @@ int main(int argc, char *argv[]) {
                     break;
                 }
                 if (foundCount > 0) {
+                    if (trassFile) {
+                        writeStudentDataToFile(trassFile, foundStudents);
+                    }
                     printf("Students found:\n");
                     for (int i = 0; i < foundCount; i++) {
                         printf("ID=%u, Name=%s %s, Group=%s\n",
@@ -102,6 +117,9 @@ int main(int argc, char *argv[]) {
                     break;
                 }
                 if (foundCount > 0) {
+                    if (trassFile) {
+                        writeStudentDataToFile(trassFile, foundStudents);
+                    }
                     printf("Students found:\n");
                     for (int i = 0; i < foundCount; i++) {
                         printf("ID=%u, Name=%s %s, Group=%s\n",
@@ -135,6 +153,9 @@ int main(int argc, char *argv[]) {
                 scanf("%u", &id);
                 Student *student = findStudentById(students, count, id);
                 if (student) {
+                    if (trassFile) {
+                        writeStudentDataToFile(trassFile, student);
+                    }
                     writeStudentDataToFile(outputFile, student);
                     printf("Student data written to file\n");
                 } else {
@@ -143,6 +164,11 @@ int main(int argc, char *argv[]) {
                 break;
             }
             case 10:
+                if (trassFile) {
+                    err = writeHighAverageStudentsToFile(trassFile, students, count);
+                    if (err != OK)
+                        break;
+                }
                 err = writeHighAverageStudentsToFile(outputFile, students, count);
                 if (err == OK)
                     break;

@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
         return ERROR_OPEN_FILE;
     }
 
-    char line[1024];
+    char line[LINE_SIZE];
     enum Errors error = OK;
     while (fgets(line, sizeof(line), inputFile)) {
 
@@ -23,7 +23,8 @@ int main(int argc, char* argv[]) {
         TreeNode* root;
         error = buildTree(line, &index, &root);
         if (error != OK){
-            freeTree(root);
+            if (root != NULL)
+                freeTree(root);
             fclose(inputFile);
             fclose(outputFile);
             return error;

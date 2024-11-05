@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <time.h>
 #include <string.h>
+#include <stdarg.h>
 
 #define SIZE_INT 32
 
@@ -34,7 +35,6 @@ double norm_inf_wrapper(Vector *v, void *param);
 double norm_p_wrapper(Vector *v, void *param);
 double norm_A_wrapper(Vector *v, void *param);
 
-
-enum Errors find_longest_vectors(int n, Vector *vectors, int num_vectors, double (*norm_func)(Vector *, void *), void *norm_param, Vector **longest_vectors, int *num_longest);
+enum Errors find_longest_vectors(double (*norm_func)(Vector *, void *), void *norm_param, int num_vectors, Vector ***longest_vectors, int *num_longest, ...);
 
 #endif

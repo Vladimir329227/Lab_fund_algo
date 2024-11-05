@@ -12,6 +12,8 @@
 #include <stdarg.h>
 #include <string.h>
 
+#define MAX_ITERATIONS 100000
+
 enum Errors
 {
     OK,

@@ -51,21 +51,40 @@ double norm_A_wrapper(Vector *v, void *param) {
 }
 
 
-enum Errors find_longest_vectors(int n, Vector *vectors, int num_vectors, double (*norm_func)(Vector *, void *), void *norm_param, Vector **longest_vectors, int *num_longest) {
-    if (n <= 0 || vectors == NULL || num_vectors <= 0 || norm_func == NULL || longest_vectors == NULL || num_longest == NULL) {
-        return INVALID_INPUT;
+enum Errors find_longest_vectors(double (*norm_func)(Vector *, void *), void *norm_param, int num_vectors, Vector ***longest_vectors, int *num_longest, ...) {
+    va_list args;
+    va_start(args, num_longest);
+
+    Vector *vectors[num_vectors];
+    for (int i = 0; i < num_vectors; i++) {
+        vectors[i] = va_arg(args, Vector *);
     }
+    va_end(args);
+
     double max_norm = 0, norm = 0;
     *num_longest = 0;
-
+    Vector **t = NULL;
     for (int i = 0; i < num_vectors; i++) {
-        norm = norm_func(&vectors[i], norm_param);
+        norm = norm_func(vectors[i], norm_param);
         if (norm > max_norm) {
             max_norm = norm;
             *num_longest = 1;
-            longest_vectors[0] = &vectors[i];
+            if (*longest_vectors) {
+                free(*longest_vectors);
+            }
+            *longest_vectors = (Vector **)malloc(sizeof(Vector *));
+            if (!*longest_vectors) {
+                return INVALID_MEMORY;
+            }
+            (*longest_vectors)[0] = vectors[i];
         } else if (norm == max_norm) {
-            longest_vectors[(*num_longest)++] = &vectors[i];
+            t = (Vector **)realloc(*longest_vectors, sizeof(Vector *) * (*num_longest + 1));
+            if (!t) {
+                free(*longest_vectors);
+                return INVALID_MEMORY;
+            }
+            *longest_vectors = t;
+            (*longest_vectors)[(*num_longest)++] = vectors[i];
         }
     }
     return OK;

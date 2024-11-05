@@ -12,6 +12,7 @@
 #include <string.h>
 
 #define SIZE_INT 32
+#define LINE_SIZE 1024
 
 enum Errors
 {

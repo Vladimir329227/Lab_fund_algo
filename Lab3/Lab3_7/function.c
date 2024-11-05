@@ -287,8 +287,6 @@ enum Errors undo_modifications(struct StringlyLinkedList** head, struct Modifica
     enum Errors err = OK;
     for (size_t i = 0; i < undo_count; i++) {
         struct Modification modification = (*history)[*history_size - 1];
-        printf("Kod operacji: %d\n", modification.operation);
-        printf("modification data: %s %s %s %d.%d.%d %c %.2f\n", modification.data.name, modification.data.surname, modification.data.patronymic, modification.data.year, modification.data.month, modification.data.day, modification.data.sex, modification.data.salary);
         (*history_size)--;
         if (modification.operation == ADD) {
             //err = remove_liver(head, modification.data);
