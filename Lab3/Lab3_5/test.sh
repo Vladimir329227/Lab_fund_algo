@@ -30,10 +30,12 @@ GroupA
 0
 EOF
 
-./$PROGRAM $INPUT_FILE $OUTPUT_FILE $TRASSET_FILE < $TEMP_INPUT | tee output.log
+valgrind ./$PROGRAM $INPUT_FILE $OUTPUT_FILE $TRASSET_FILE < $TEMP_INPUT | tee output.log
 
 echo "-"
 echo "-"
 echo "End Test"
 echo "-"
 echo "-"
+
+rm $TEMP_INPUT

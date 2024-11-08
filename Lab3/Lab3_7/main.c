@@ -139,6 +139,7 @@ int main(int argc, char* argv[]) {
         fclose(outputFile);
         return err;
     }
+    fclose(outputFile);
     free_list(liver);
     free(history);
     return err;
