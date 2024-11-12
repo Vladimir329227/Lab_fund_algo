@@ -1,0 +1,8 @@
+#define Te 2
+#define Test 1
+#define T +
+#define 1 Test
+ T  
+1 232 3   4ndf 
+
+Te

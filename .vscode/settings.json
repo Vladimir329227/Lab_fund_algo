@@ -9,7 +9,8 @@
         "string": "c",
         "stdlib.h": "c",
         "corecrt.h": "c",
-        "float.h": "c"
+        "float.h": "c",
+        "math.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

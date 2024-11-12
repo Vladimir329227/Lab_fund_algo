@@ -1,7 +1,7 @@
 #include "main.h"
 
 enum Errors createString(const char *str, String *new_str) {
-    if (!new_str)
+    if (!new_str || !str)
         return INVALID_INPUT;    
     new_str->length = 0;
     while (str[new_str->length] != '\0')
@@ -17,8 +17,10 @@ enum Errors createString(const char *str, String *new_str) {
 enum Errors deleteString(String *str) {
     if (!str)
         return INVALID_INPUT;
-    if (str->data != NULL)
+    if (str->data != NULL){
         free(str->data);
+        str->data = NULL;           
+    }
     str->length = 0;
     return OK;
 }

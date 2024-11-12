@@ -2,8 +2,8 @@
 
 int main() {
     int n = 3;
-    Vector v1 = {n, (double[]){1, 2, 3}};
-    Vector v2 = {n, (double[]){7, 8, 9}};
+    Vector v1 = {n, (double[]){9, 8, 9}};
+    Vector v2 = {n, (double[]){5, 6, 7}};
     Vector v3 = {n, (double[]){7, 8, 9}};
 
     Vector **longest_vectors = NULL;
@@ -41,9 +41,9 @@ int main() {
     longest_vectors = NULL;
 
     double A[] = {
-        1, 0, 0,
-        0, 1, 0,
-        0, 0, 1
+        1, 5, 0,
+        0, 5, 0,
+        0, 5, 1
     };
     if (find_longest_vectors(norm_A_wrapper, A, n, &longest_vectors, &num_longest, &v1, &v2, &v3) != OK) {
         return INVALID_MEMORY;
