@@ -14,22 +14,31 @@ unsigned long hash(const char *str) {
     return hash % HASH_SIZE;
 }
 
-Node *create_node(const char *def_name, const char *value) {
-    Node *node = (Node *)malloc(sizeof(Node));
-    node->def_name = strdup(def_name);
-    node->value = strdup(value);
-    node->next = NULL;
-    return node;
+enum Errors create_node(const char *def_name, const char *value, Node** node) {
+    if (!def_name || !value || !node)
+        return INVALID_INPUT;
+    *node = (Node *)malloc(sizeof(Node));
+    if (!*node)
+        return INVALID_MEMORY;
+    (*node)->def_name = strdup(def_name);
+    (*node)->value = strdup(value);
+    (*node)->next = NULL;
+    return OK;
 }
 
-void insert(HashTable *ht, const char *def_name, const char *value) {
+enum Errors insert(HashTable *ht, const char *def_name, const char *value) {
+    if (!def_name || !value || !ht)
+        return INVALID_INPUT;
     unsigned long index = hash(def_name);
-    Node *node = create_node(def_name, value);
+    Node *node;
+    if (create_node(def_name, value, &node) != OK)
+        return INVALID_MEMORY;
     node->next = ht->table[index];
     ht->table[index] = node;
     char *newline = strchr(node->value, '\n');
     if (newline)
         *newline = '\0';
+    return OK;
 }
 
 
@@ -45,7 +54,9 @@ char* search(HashTable *ht, const char *def_name) {
     return NULL;
 }
 
-void free_table(HashTable *ht) {
+enum Errors free_table(HashTable *ht) {
+    if (!ht)
+        return INVALID_INPUT;
     for (int i = 0; i < HASH_SIZE; i++) {
         Node *node = ht->table[i];
         while (node) {
@@ -56,6 +67,7 @@ void free_table(HashTable *ht) {
             free(temp);
         }
     }
+    return OK;
 }
 
 enum Errors process_file(const char *filename) {
@@ -79,7 +91,11 @@ enum Errors process_file(const char *filename) {
             char value[LINE_SIZE];
             if (sscanf(ptr, "#define %s %[^\n]", def_name, value) == 2) {
                 value[strlen(value)-1] = '\0';
-                insert(&ht, def_name, value);
+                if (insert(&ht, def_name, value) != OK) {
+                    free_table(&ht);
+                    fclose(file);
+                    return INVALID_MEMORY;
+                }
                 printf("#define %s %s\n", def_name, value);
             }
         }

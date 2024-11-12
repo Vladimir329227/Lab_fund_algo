@@ -1,0 +1,107 @@
+Error: Invalid instruction: 
+
+Executed: A := 0
+Result: 0
+Error: Invalid instruction: 
+
+Executed: B := 1
+Result: 1
+Error: Invalid instruction: 
+
+Executed: C := 2
+Result: 2
+Error: Invalid instruction: 
+
+Error: Invalid instruction: 
+
+Executed: D := A + B
+Result: 2
+Error: Invalid instruction: 
+
+Executed: E := B & C
+Result: 0
+Error: Invalid instruction: 
+
+Executed: F := A -> C
+Result: 18446744073709551615
+Error: Invalid instruction: 
+
+Executed: G := C <- A
+Result: 18446744073709551615
+Error: Invalid instruction: 
+
+Executed: H := A ~ B
+Result: 18446744073709551614
+Error: Invalid instruction: 
+
+Executed: I := A <> B
+Result: 1
+Error: Invalid instruction: 
+
+Executed: J := A +> B
+Result: 1
+Error: Invalid instruction: 
+
+Executed: K := A ? B
+Result: 18446744073709551615
+Error: Invalid instruction: 
+
+Executed: L := A ! B
+Result: 18446744073709551615
+Error: Invalid instruction: 
+
+Error: Invalid instruction: 
+
+Executed: M := \A
+Result: 18446744073709551615
+Error: Invalid instruction: 
+
+Error: Invalid instruction: 
+
+Error: Invalid input in instruction: read(N, 2)
+Error: Invalid instruction: 
+
+Error: Invalid instruction: 
+
+Write: write(N, 16)
+Value: 0
+Error: Invalid instruction: 
+
+Error: Invalid instruction: 
+
+Error: Invalid instruction:   Это многострочный комментарий
+
+Error: Invalid instruction:   Он занимает несколько строк
+
+Error: Invalid instruction: }
+
+Error: Invalid instruction: 
+
+Error: Invalid instruction: 
+
+Executed: O := D + E
+Result: 0
+Error: Invalid instruction: 
+
+Executed: P := F & G
+Result: 18446744073709551615
+Error: Invalid instruction: 
+
+Executed: Q := H <> I
+Result: 18446744073709551615
+Error: Invalid instruction: 
+
+Executed: R := J +> K
+Result: 18446744073709551614
+Error: Invalid instruction: 
+
+Executed: S := L ? M
+Result: 0
+Error: Invalid instruction: 
+
+Executed: T := N ! O
+Result: 18446744073709551615
+Error: Invalid instruction: 
+
+Error: Invalid instruction: 
+
