@@ -26,10 +26,11 @@ typedef struct Node {
     char *def_name;
     char *value;
     struct Node *next;
+    unsigned long hash; 
 } Node;
 
 typedef struct {
-    Node *table[HASH_SIZE];
+    Node **table;
     int size;
     int count;
 } HashTable;

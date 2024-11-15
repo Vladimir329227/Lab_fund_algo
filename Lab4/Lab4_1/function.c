@@ -4,7 +4,7 @@ unsigned long hash(const char *str) {
     unsigned long hash = 0;
     while (*str != '\0') {
         if ( hash > ULONG_MAX / 62 - (*str - '0') - 10)
-            hash = hash % ULONG_MAX;
+            hash = 1;
 
         if (isdigit(*str))
             hash = hash * 62 + (*str - '0');
@@ -14,10 +14,34 @@ unsigned long hash(const char *str) {
             hash = hash * 62 + (*str - 'a' + 36);
         str++;
     }
-    return hash % HASH_SIZE;
+    return hash;
 }
 
-enum Errors create_node(const char *def_name, const char *value, Node** node) {
+enum Errors rebuild_table(HashTable *ht) {
+    int new_size = ht->size * 2;
+    Node **new_table = (Node **)calloc(new_size, sizeof(Node *));
+    if (!new_table)
+        return INVALID_MEMORY;
+
+    for (int i = 0; i < ht->size; i++) {
+        Node *node = ht->table[i];
+        while (node) {
+            Node *next = node->next;
+            unsigned long new_index = node->hash % new_size;
+            node->next = new_table[new_index];
+            new_table[new_index] = node;
+            node = next;
+        }
+    }
+
+    free(ht->table);
+    ht->table = new_table;
+    ht->size = new_size;
+
+    return OK;
+}
+
+enum Errors create_node(const char *def_name, const char *value, Node** node, unsigned long hash) {
     if (!def_name || !value || !node)
         return INVALID_INPUT;
     *node = (Node *)malloc(sizeof(Node));
@@ -26,6 +50,7 @@ enum Errors create_node(const char *def_name, const char *value, Node** node) {
     (*node)->def_name = strdup(def_name);
     (*node)->value = strdup(value);
     (*node)->next = NULL;
+    (*node)->hash = hash;
     return OK;
 }
 
@@ -34,18 +59,18 @@ enum Errors insert(HashTable *ht, const char *def_name, const char *value) {
         return INVALID_INPUT;
     unsigned long index = hash(def_name);
     Node *node;
-    if (create_node(def_name, value, &node) != OK)
+    if (create_node(def_name, value, &node, index) != OK)
         return INVALID_MEMORY;
-    node->next = ht->table[index];
-    ht->table[index] = node;
+    node->next = ht->table[index % ht->size];
+    ht->table[index % ht->size] = node;
     char *newline = strchr(node->value, '\n');
     if (newline)
         *newline = '\0';
     
     ht->count++;
     if (ht->count > ht->size) {
-        printf("Table is full\n");
-        return INVALID_INPUT;
+        if (rebuild_table(ht) != OK) 
+            return INVALID_MEMORY;
     }
     return OK;
 }
@@ -53,7 +78,7 @@ enum Errors insert(HashTable *ht, const char *def_name, const char *value) {
 
 char* search(HashTable *ht, const char *def_name) {
     unsigned long index = hash(def_name);
-    Node *node = ht->table[index];
+    Node *node = ht->table[index % ht->size];
     while (node) {
         if (strcmp(node->def_name, def_name) == 0) {
             return node->value;
@@ -76,6 +101,7 @@ enum Errors free_table(HashTable *ht) {
             free(temp);
         }
     }
+    free(ht->table);
     return OK;
 }
 
@@ -88,6 +114,11 @@ enum Errors process_file(const char *filename) {
 
     HashTable ht = {0};
     ht.size = HASH_SIZE;
+    ht.table = (Node **)calloc(ht.size, sizeof(Node *));
+    if (!ht.table) {
+        fclose(file);
+        return INVALID_MEMORY;
+    }
 
     char line[LINE_SIZE];
     while (fgets(line, sizeof(line), file)) {
@@ -111,23 +142,27 @@ enum Errors process_file(const char *filename) {
     }
 
     rewind(file);
-
+    char buffer[LINE_SIZE];
     while (fgets(line, sizeof(line), file)) {
         char *ptr = line;
         while (ptr[0] == ' ' || ptr[0] == '\t')
             ptr++;
         if (strncmp(ptr, "#define", 7) != 0) {
-            char *token = strtok(ptr, " \t\n\r");
-            while (token != NULL) {
-                char *value = search(&ht, token);
+            const char *delimiters = " \t\n\r()!+-/*[].,;:";
+            char *token = strpbrk(ptr, delimiters);
+            while (token) {
+                sprintf(buffer, "%.*s", (int)(token - ptr), ptr);
+                char *value = search(&ht, buffer);
                 if (value) {
-                    printf("%s ", value);
+                    printf("%s%c", value, *token);
                 } else {
-                    printf("%s ", token);
+                    printf("%.*s%c", (int)(token - ptr), ptr, *token);
                 }
-                token = strtok(NULL, " \t\n\r");
+                ptr = token + 1;
+                token = strpbrk(ptr, delimiters);
             }
-            printf("\n");
+            printf("%s", ptr);
+
         }
     }
 

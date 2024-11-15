@@ -1,9 +1,9 @@
 #define Te 2
 #define Test 1
 
-#define T 
-    #define 1 Test
+#define T vbn
+#define 1 Test
  T  
-Te 1 1 usda1 232 3   4ndf 
+Te 1+1 usda1 232 3   4ndf 
 
 Te
