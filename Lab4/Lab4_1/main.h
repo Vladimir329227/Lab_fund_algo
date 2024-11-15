@@ -31,6 +31,7 @@ typedef struct Node {
 typedef struct {
     Node *table[HASH_SIZE];
     int size;
+    int count;
 } HashTable;
 
 enum Errors process_file(const char *filename);

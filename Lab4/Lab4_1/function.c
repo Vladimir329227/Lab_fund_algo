@@ -3,6 +3,9 @@
 unsigned long hash(const char *str) {
     unsigned long hash = 0;
     while (*str != '\0') {
+        if ( hash > ULONG_MAX / 62 - (*str - '0') - 10)
+            hash = hash % ULONG_MAX;
+
         if (isdigit(*str))
             hash = hash * 62 + (*str - '0');
         else if (isupper(*str))
@@ -38,6 +41,12 @@ enum Errors insert(HashTable *ht, const char *def_name, const char *value) {
     char *newline = strchr(node->value, '\n');
     if (newline)
         *newline = '\0';
+    
+    ht->count++;
+    if (ht->count > ht->size) {
+        printf("Table is full\n");
+        return INVALID_INPUT;
+    }
     return OK;
 }
 

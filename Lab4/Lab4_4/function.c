@@ -1,12 +1,17 @@
 #include "main.h"
 
-enum Errors remove_comments(char *line) {
+enum Errors remove_comments(char *line, char *multiline_start=NULL) {
+    if (multiline_start) {
+        char *multiline_end = strchr(line, '}');
+        if (multiline_end) *multiline_end = '\0';
+        *multiline_start = '\0';
+    }
     if (!line) 
         return INVALID_INPUT;
     char *comment_start = strchr(line, '%');
     if (comment_start) *comment_start = '\0';
 
-    char *multiline_start = strchr(line, '{');
+    multiline_start = strchr(line, '{');
     if (multiline_start) {
         char *multiline_end = strchr(line, '}');
         if (multiline_end) *multiline_end = '\0';
