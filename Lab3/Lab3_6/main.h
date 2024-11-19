@@ -21,32 +21,24 @@ enum Errors
     ERROR_OPEN_FILE,
 };
 
-typedef struct {
-    unsigned int id;
-    char name[50], surname[50], group[50];
-    unsigned char *grades;
-} Student;
+struct BusStop{
+    char name[LEN_NAME];
+    struct BusStop *next;
+    time_t time_arrival, time_departure;
+    int flag;
+};
 
-int isValidName(const char *name);
+struct Bus{
+    unsigned int number;
+    struct BusStop *start;
+};
 
-enum Errors readStudentsFromFile(const char *filename, int *count, Student** students);
-enum Errors writeHighAverageStudentsToFile(const char *filename, Student *students, int count);
-enum Errors writeStudentDataToFile(const char *filename, Student *student);
+enum Errors ParseStopFile(const char *filename, struct Bus **result, int *count);
 
-float calculateAverageGrade(unsigned char *grades, int count);
+void freeBus(struct Bus *bus, int number);
 
-void freeStudents(Student *students, int count);
+void printBus(struct Bus *bus, int number);
 
-void PrintStudents(Student *students, int count);
-
-enum Errors findStudentsByGroup(Student *students, int count, const char *group, int *foundCount, Student **result);
-enum Errors findStudentsByName(Student *students, int count, const char *name, int *foundCount, Student **result);
-enum Errors findStudentsBySurname(Student *students, int count, const char *surname, int *foundCount, Student **result);
-Student* findStudentById(Student *students, int count, unsigned int id);
-
-int compareById(const void *a, const void *b);
-int compareBySurname(const void *a, const void *b);
-int compareByName(const void *a, const void *b);
-int compareByGroup(const void *a, const void *b);
+enum Errors UserMain(struct Bus *buses, int count);
 
 #endif

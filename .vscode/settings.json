@@ -10,7 +10,10 @@
         "stdlib.h": "c",
         "corecrt.h": "c",
         "float.h": "c",
-        "math.h": "c"
+        "math.h": "c",
+        "time.h": "c",
+        "stdarg.h": "c",
+        "vcruntime.h": "c"
     },
     "C_Cpp.errorSquiggles": "disabled"
 }

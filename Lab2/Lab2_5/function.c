@@ -164,6 +164,7 @@ enum Errors memory_dump(const void *data, size_t size, char *buffer) {
     return OK;
 }
 
+
 enum Errors overfprintf(FILE *stream, const char *format, ...) {
     va_list args;
     va_start(args, format);
