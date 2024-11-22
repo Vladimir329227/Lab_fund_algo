@@ -5,9 +5,14 @@ enum Errors has_finite_representation(double number, int base, int* result) {
         return INVALID_INPUT; 
 
     double fraction = number;
-    int denominator = 1, iterations = 0;
+    long int denominator = 1, iterations = 0;
 
-    while (fraction != (int)fraction && iterations < MAX_ITERATIONS) {
+    while (fraction - (unsigned int)fraction <= EPSILON  && iterations < MAX_ITERATIONS) {
+        if (fraction > DBL_MAX / base || fraction < DBL_MIN / base || denominator > LONG_MAX / base) {
+            result = 0;
+            printf("Overflow\n");
+            return OK;
+        }
         fraction *= base;
         denominator *= base;
         iterations++;

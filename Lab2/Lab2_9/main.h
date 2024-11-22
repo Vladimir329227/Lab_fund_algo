@@ -13,7 +13,7 @@
 #include <string.h>
 
 #define MAX_ITERATIONS 10000
-
+#define EPSILON 0.0001
 enum Errors
 {
     OK,
